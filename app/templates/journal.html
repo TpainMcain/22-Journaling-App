@@ -1,0 +1,14 @@
+<!-- app/templates/journal.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Journal Entry</h2>
+<p>Your prompt for today: Your random prompt for today</p> <!-- Ideally, use a dynamic variable for this prompt -->
+<form action="{{ url_for('journal') }}" method="post">
+    <div>
+        <label for="content">Your Entry:</label>
+        <textarea name="content" rows="10" required></textarea>
+    </div>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}
