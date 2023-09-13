@@ -74,16 +74,16 @@ def journal():
     ]
 
     prompts = [
-        ["How do you feel today?", "When were you last angry?", "Describe a joyful moment.", "What's weighing on your mind?"],
-        ["Describe a recent dream.", "Have you had recurring dreams?", "Dreams or reality?", "A dream place you wish to visit."],
-        ["Where do you see yourself in 5 years?", "What's a skill you'd like to learn?", "List down your top 3 future goals.", "How will you achieve them?"],
-        ["Recall a fond childhood memory.", "A mistake you learned from.", "Describe a day you'd like to relive."],
-        ["Your dream travel destination?", "A memorable trip you had.", "Traveling solo or with companions?", "Describe a local hidden gem."],
-        ["Describe a meaningful conversation you had recently.", "How have your relationships evolved?", "Someone you're grateful for.", "A lesson learned from a relationship."],
-        ["A moment you felt immense growth.", "What's a recent challenge you overcame?", "What are your current barriers to growth?"],
-        ["How did you spend your day?", "Something unexpected that happened.", "A simple joy from today.", "What are you looking forward to tomorrow?"],
-        ["A project you'd like to start.", "Describe a hobby you'd like to pursue.", "What's an idea that excites you?"],
-        ["What are your current health goals?", "How do you feel physically today?", "What's a new healthy habit you've adopted?", "Discuss a recent wellness activity you tried."]
+        ["How do you feel today", "When were you last angry", "Describe a joyful moment", "Whats weighing on your mind"],
+        ["Describe a recent dream", "Have you had recurring dreams", "Dreams or reality", "A dream place you wish to visit"],
+        ["Where do you see yourself in 5 years", "Whats a skill youd like to learn", "List down your top 3 future goals", "How will you achieve them"],
+        ["Recall a fond childhood memory", "A mistake you learned from", "Describe a day youd like to relive"],
+        ["Your dream travel destination", "A memorable trip you had", "Traveling solo or with companions", "Describe a local hidden gem"],
+        ["Describe a meaningful conversation you had recently", "How have your relationships evolved", "Someone youre grateful for", "A lesson learned from a relationship"],
+        ["A moment you felt immense growth", "Whats a recent challenge you overcame", "What are your current barriers to growth"],
+        ["How did you spend your day", "Something unexpected that happened", "A simple joy from today", "What are you looking forward to tomorrow"],
+        ["A project youd like to start", "Describe a hobby youd like to pursue", "Whats an idea that excites you"],
+        ["What are your current health goals", "How do you feel physically today", "Whats a new healthy habit youve adopted", "Discuss a recent wellness activity you tried"]
     ]
     
     if request.method == "POST":

@@ -9,7 +9,7 @@
             <div class="list-group">
                 {% for category in categories %}
                     <!-- When a category is clicked, we show its corresponding prompts div -->
-                    <a href="#" class="list-group-item list-group-item-action" onclick="showPrompts('prompts{{ loop.index }}')">{{ category }}</a>
+                    <a href="#" class="list-group-item list-group-item-action" onclick="showPrompts('prompts{{ loop.index }}'); return false;">{{ category }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -19,7 +19,7 @@
             {% for prompt_list in prompts %}
                 <div id="prompts{{ loop.index }}" class="prompt-list" style="display: none;">
                     {% for prompt in prompt_list %}
-                        <a href="#" class="list-group-item list-group-item-action" onclick="changePrompt('{{ prompt }}')">{{ prompt }}</a>
+                        <a href="#" class="list-group-item list-group-item-action" onclick="changePrompt('{{ prompt }}'); return false;">{{ prompt }}</a>
                     {% endfor %}
                 </div>
             {% endfor %}
@@ -31,6 +31,7 @@
             
             <!-- Journal Entry Form -->
             <form action="{{ url_for('journal') }}" method="post">
+                <input type="hidden" name="selected_prompt" id="selectedPromptInput">  <!-- New hidden input field -->
                 <div class="form-group">
                     <label for="journalContent">Write your thoughts:</label>
                     <textarea id="journalContent" name="content" class="form-control" rows="10" required></textarea>
@@ -63,6 +64,7 @@
      */
     function changePrompt(text) {
         document.getElementById('promptHeader').innerText = text;
+        document.getElementById('selectedPromptInput').value = text;  <!-- Updating the hidden input value -->
     }
 </script>
 
