@@ -1,14 +1,102 @@
-/* Minimal styling for the navbar and footer */
-header, footer {
-    background-color: #333;
-    color: white;
-    padding: 1rem 2rem;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4e6f7; /* Slightly lighter purple */
+    margin: 0;
+    padding: 0;
+    color: #6b5186; /* Dark purple with better contrast */
 }
-nav a {
-    margin-right: 1rem;
-    color: white;
-    text-decoration: none;
+
+.container {
+    max-width: 1200px; 
+    width: calc(100% - 40px); 
+    margin: 0 auto; /* Center the container */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(107, 81, 134, 0.1); /* Adjusted shadow color for consistency */
 }
+
+h1, h2 {
+    color: #8a6db1; /* Adjusted purple for better readability */
+    margin-top: 0;
+    font-weight: bold;
+}
+
+/* Navbar styling */
+header {
+    padding: 10px 50px; 
+    background-color: #7c65a1; /* Consistent purple shade */
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
 nav a:hover {
-    text-decoration: underline;
+    background-color: #9c80c5; 
+}
+
+footer {
+    background-color: #6b5186;
+    color: #ffffff; /* Added for better readability */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #8a6db1; 
+    box-shadow: 0px 0px 8px rgba(138, 109, 177, 0.3);
+}
+
+button[type="submit"] {
+    background: linear-gradient(160deg, #8a6db1 0%, #7c65a1 100%);
+    border: none; /* Assuming you want a borderless button */
+    color: white; /* Assuming you want white text */
+}
+
+button[type="submit"]:hover {
+    background-color: #7c65a1;
+}
+
+.sidebar {
+    background-color: #f4e6f7;
+}
+
+.sidebar .nav-link {
+    color: #6b5186; 
+}
+
+.sidebar .nav-link.active {
+    color: #8a6db1; 
+}
+
+.sidebar-heading {
+    color: #6b5186; 
+}
+
+/* Navbar container */
+.navbar-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 50px;
+    background-color: #7c65a1;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar buttons */
+.nav-btn {
+    padding: 8px 16px;
+    margin-right: 10px; 
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px; 
+    transition: background-color 0.2s, color 0.2s;
+    color: white;
+    background-color: #9c80c5;
+}
+
+.nav-btn:last-child {
+    margin-right: 0; 
+}
+
+.nav-btn:hover {
+    background-color: #7c65a1;
+    color: #f5eaf8; 
 }

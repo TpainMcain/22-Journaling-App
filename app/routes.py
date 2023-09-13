@@ -1,27 +1,25 @@
+# Import necessary libraries and modules
 from flask import render_template, url_for, flash, redirect, request
 from app import app, db
 from app.models import User, Journal
 from flask_login import login_user, current_user, logout_user, login_required, LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Initialize LoginManager with the app instance.
+# Set up Flask-Login
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'  # Redirects users to the login page when they try to access a @login_required route without being logged in.
+login_manager.login_view = 'login'  # Redirects users to the login page if they attempt to access a page where login is required.
 
-# This function is used by Flask-Login to reload the user object from the user ID stored in the session.
 @login_manager.user_loader
 def load_user(user_id):
+    """Reload the user object from the user ID stored in the session."""
     return User.query.get(int(user_id))
 
-# Registration route.
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    # If the user is already logged in, redirect to home.
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     
-    # Register a new user.
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
@@ -32,47 +30,73 @@ def register():
         login_user(user)
         flash('Registration successful!', 'success')
         return redirect(url_for('home'))
+    
     return render_template('register.html')
 
-# Login route.
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    # If the user is already logged in, redirect to home.
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     
-    # User login functionality.
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
         user = User.query.filter_by(username=username).first()
+        
         if user and check_password_hash(user.password, password):
             login_user(user)
             return redirect(url_for('home'))
+        
         flash('Login failed. Check your credentials.', 'danger')
+    
     return render_template('login.html')
 
-# Logout route.
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('home'))
 
-# Journal route for users to post journal entries.
 @app.route("/journal", methods=["GET", "POST"])
-@login_required  # User must be logged in to access this route.
+@login_required
 def journal():
+    categories = [
+        "Emotions", 
+        "Dreams", 
+        "Future Goals", 
+        "Past Memories", 
+        "Travel",
+        "Relationships",
+        "Personal Growth",
+        "Daily Activities",
+        "Creative Ideas",
+        "Health & Wellness"
+    ]
+
+    prompts = [
+        ["How do you feel today?", "When were you last angry?", "Describe a joyful moment.", "What's weighing on your mind?"],
+        ["Describe a recent dream.", "Have you had recurring dreams?", "Dreams or reality?", "A dream place you wish to visit."],
+        ["Where do you see yourself in 5 years?", "What's a skill you'd like to learn?", "List down your top 3 future goals.", "How will you achieve them?"],
+        ["Recall a fond childhood memory.", "A mistake you learned from.", "Describe a day you'd like to relive."],
+        ["Your dream travel destination?", "A memorable trip you had.", "Traveling solo or with companions?", "Describe a local hidden gem."],
+        ["Describe a meaningful conversation you had recently.", "How have your relationships evolved?", "Someone you're grateful for.", "A lesson learned from a relationship."],
+        ["A moment you felt immense growth.", "What's a recent challenge you overcame?", "What are your current barriers to growth?"],
+        ["How did you spend your day?", "Something unexpected that happened.", "A simple joy from today.", "What are you looking forward to tomorrow?"],
+        ["A project you'd like to start.", "Describe a hobby you'd like to pursue.", "What's an idea that excites you?"],
+        ["What are your current health goals?", "How do you feel physically today?", "What's a new healthy habit you've adopted?", "Discuss a recent wellness activity you tried."]
+    ]
+    
     if request.method == "POST":
-        prompt = "Your random prompt for today"  # This can be fetched from a list of prompts
+        prompt = request.form.get('selected_prompt', "Your random prompt for today")
         content = request.form.get('content')
         journal_entry = Journal(prompt=prompt, content=content, author=current_user)
         db.session.add(journal_entry)
         db.session.commit()
         flash('Your journal entry has been saved!', 'success')
         return redirect(url_for('home'))
-    return render_template('journal.html')
+    
+    return render_template('journal.html', categories=categories, prompts=prompts)
 
-# Home route.
 @app.route('/')
 def home():
     return render_template('base.html')
