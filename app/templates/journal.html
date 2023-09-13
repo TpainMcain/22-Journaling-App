@@ -1,14 +1,69 @@
-<!-- app/templates/journal.html -->
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Journal Entry</h2>
-<p>Your prompt for today: Your random prompt for today</p> <!-- Ideally, use a dynamic variable for this prompt -->
-<form action="{{ url_for('journal') }}" method="post">
-    <div>
-        <label for="content">Your Entry:</label>
-        <textarea name="content" rows="10" required></textarea>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Sidebar for categories -->
+        <div class="col-lg-3 col-md-4">
+            <div class="list-group">
+                {% for category in categories %}
+                    <!-- When a category is clicked, we show its corresponding prompts div -->
+                    <a href="#" class="list-group-item list-group-item-action" onclick="showPrompts('prompts{{ loop.index }}')">{{ category }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Middle column for prompts -->
+        <div class="col-lg-3 col-md-4">
+            {% for prompt_list in prompts %}
+                <div id="prompts{{ loop.index }}" class="prompt-list" style="display: none;">
+                    {% for prompt in prompt_list %}
+                        <a href="#" class="list-group-item list-group-item-action" onclick="changePrompt('{{ prompt }}')">{{ prompt }}</a>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Rightmost column for the journal content -->
+        <div class="col-lg-6 col-md-4">
+            <h1 id="promptHeader">Your Random Prompt</h1>
+            
+            <!-- Journal Entry Form -->
+            <form action="{{ url_for('journal') }}" method="post">
+                <div class="form-group">
+                    <label for="journalContent">Write your thoughts:</label>
+                    <textarea id="journalContent" name="content" class="form-control" rows="10" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Entry</button>
+            </form>
+        </div>
     </div>
-    <button type="submit">Save</button>
-</form>
+</div>
+
+<script>
+    /**
+     * Hides all prompt lists and shows the clicked one.
+     * @param {string} id - The ID of the prompt list to display.
+     */
+    function showPrompts(id) {
+        // First, hide all prompts
+        const prompts = document.querySelectorAll('.prompt-list');
+        prompts.forEach(element => {
+            element.style.display = 'none';
+        });
+
+        // Now, show the clicked one
+        document.getElementById(id).style.display = 'block';
+    }
+
+    /**
+     * Changes the content of the main prompt header.
+     * @param {string} text - The new text to set for the header.
+     */
+    function changePrompt(text) {
+        document.getElementById('promptHeader').innerText = text;
+    }
+</script>
+
 {% endblock %}
